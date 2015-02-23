@@ -111,8 +111,9 @@ $(document).ready(function() {
     hello.logout("google");
   });
 
-  BootstrapDialog.show({
-    message: "This application requires you to log in with a Google account. Once logged in, your data will be automatically saved.",
+  var introDialog = BootstrapDialog.show({
+    title: "Welcome",
+    message: "<p>Thank you for participiating in the PRISM review process. This application allows you to create data reports linked to a geographic areas of interest that will be reviewed by the PRISM team.</p><p> In order to save your data, this application requires you to log in with a Google account. We request access to your basic information (name and email) for reporting purposes. Once logged in your data will be automatically saved between sessions.</p>",
     type: BootstrapDialog.TYPE_INFO
   });
 });
