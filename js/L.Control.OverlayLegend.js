@@ -34,6 +34,6 @@ L.Control.OverlayLegend = L.Control.extend({
   }
 });
 
-L.control.OverlayLegend = function (options) {
+L.control.overlayLegend = function (options) {
     return new L.Control.OverlayLegend(options);
 };

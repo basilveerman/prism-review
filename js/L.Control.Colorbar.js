@@ -42,6 +42,6 @@ L.Control.Colorbar = L.Control.extend({
   }
 });
 
-L.control.Colorbar = function (options) {
+L.control.colorbar = function (options) {
     return new L.Control.Colorbar(options);
 };

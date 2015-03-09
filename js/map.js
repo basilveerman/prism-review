@@ -92,7 +92,7 @@ map.addControl(new L.Control.Draw({
 L.control.mousePosition().addTo(map);
 
 // Add overlay legend
-L.control.OverlayLegend({layer: pr}).addTo(map);
+L.control.overlayLegend({layer: pr}).addTo(map);
 
 return map;
 }
