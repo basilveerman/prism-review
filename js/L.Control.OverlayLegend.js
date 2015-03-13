@@ -14,6 +14,7 @@ L.Control.OverlayLegend = L.Control.extend({
       PALETTE: layer.options.styles.split('/')[1],
       LAYER: layer.options.layers,
       NUMCOLORBANDS: layer.options.numcolorbands,
+      COLORSCALERANGE: layer.options.colorscalerange,
       LOGSCALE: layer.options.logscale,
     }
     str = $.param(params);

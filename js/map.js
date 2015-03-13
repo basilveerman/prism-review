@@ -31,38 +31,50 @@ var osm = L.tileLayer('http://{s}.tiles.pacificclimate.org/tilecache/tilecache.p
   }
   ).addTo(map);
 
-var pr = L.tileLayer.wms('http://atlas.pcic.uvic.ca/ncWMS/wms', {
-  layers: 'pr_monClim_PRISM_historical_run1_197101-200012/pr',
+var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
+  layers: 'bc_ppt_8110/pr',
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
-  time: '1985-06-30',
-  styles: 'boxfill/occam_inv',
+  time: '1995-06-30T00:00:00.000Z',
+  colorscalerange: '280,7200',
+  styles: 'boxfill/rainbow',
   logscale: true,
   numcolorbands: 254,
   noWrap: true,
+  popuphtml: function(value) {
+    return 'Annual Precip: ' + Math.round(value) + ' mm';
+  }
 }).addTo(map);
-var tmax = L.tileLayer.wms('http://atlas.pcic.uvic.ca/ncWMS/wms', {
-  layers: 'tmax_monClim_PRISM_historical_run1_197101-200012/tmax',
+var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
+  layers: 'bc_tmax_8110/tmax',
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
-  time: '1985-06-30',
+  time: '1995-07-15T00:00:00.000Z',
+  colorscalerange: '0,30',
   styles: 'boxfill/ferret',
   logscale: false,
   numcolorbands: 254,
   noWrap: true,
+  popuphtml: function(value) {
+    return 'July Tmax: ' + Math.round(value * 10)/10 + ' &#x2103;C';
+  }
 });
-var tmin = L.tileLayer.wms('http://atlas.pcic.uvic.ca/ncWMS/wms', {
-  layers: 'tmin_monClim_PRISM_historical_run1_197101-200012/tmin',
+var tmin = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
+  layers: 'bc_tmin_8110/tmin',
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
-  time: '1985-06-30',
+  time: '1995-01-15T00:00:00.000Z',
+  colorscalerange: '-25,5',
   styles: 'boxfill/ferret',
   logscale: false,
   numcolorbands: 254,
   noWrap: true,
+  popuphtml: function(value) {
+    return 'January Tmin: ' + Math.round(value * 10)/10 + ' &#x2103;';
+  }
 });
 
 // Add grouped layer control
@@ -75,7 +87,6 @@ var groupedOverlays = {
 };
 var options = { exclusiveGroups: ["PRISM Climatologies"] };
 L.control.groupedLayers(null, groupedOverlays, options).addTo(map);
-
 
 // Leaflet-edit
 var drawnItems = L.featureGroup().addTo(map);
