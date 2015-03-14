@@ -1,5 +1,17 @@
 function getMap() {
 
+function popUp(f,l){
+  var out = document.createElement('table');
+  out.className = 'table table-condensed';
+  if (f.properties){
+    for(key in f.properties){
+      $(out).append('<tr><th scope="row">'+key+'</th><td>'+f.properties[key]+'</td>');
+      // out.push(key+": "+f.properties[key]);
+    }
+    l.bindPopup(out);
+  }
+}
+
 var crs = new L.Proj.CRS.TMS(
   'EPSG:3005',
   '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
@@ -12,7 +24,9 @@ var crs = new L.Proj.CRS.TMS(
 var map = new L.Map('map', 
   {
     crs: crs,
-    center: new L.LatLng(55, -125), 
+    center: new L.LatLng(55, -125),
+    minZoom: 2,
+    maxZoom: 10,
     zoom: 2,
     maxBounds: L.latLngBounds([[45, -148], [62, -108]]),
     worldCopyJump: false
@@ -46,6 +60,16 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
     return 'Annual Precip: ' + Math.round(value) + ' mm';
   }
 }).addTo(map);
+
+var pr_stations = L.markerClusterGroup();
+$.getJSON("data/ppt_stations.geojson", function(data) {
+    var geojson = L.geoJson(data, {
+      onEachFeature: popUp
+    })
+    pr_stations.addLayer(geojson);
+  });
+pr_stations.addTo(map);
+
 var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   layers: 'bc_tmax_8110/tmax',
   transparent: true,
