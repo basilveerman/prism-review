@@ -144,13 +144,31 @@ L.control.groupedLayers(null, groupedOverlays, options).addTo(map);
 // Leaflet-edit
 var drawnItems = L.featureGroup().addTo(map);
 
-map.addControl(new L.Control.Draw({
+var reportIcon = new L.AwesomeMarkers.icon(
+{
+  prefix: 'glyphicon',
+  icon: 'pencil',
+  markerColor: 'red'
+});
+map.reportIcon = reportIcon;
+
+// map.addControl(new L.Control.Draw({
+var drawControl = new L.Control.Draw({
   draw: {
+    polygon: {
+      shapeOptions: {
+        color: 'red'
+      }
+    },
+    marker: {
+      icon: reportIcon
+    },
     polyline: false,
     rectangle: false,
     circle: false
   },
-}));
+});
+map.addControl(drawControl);
 
 // Add mouse position
 L.control.mousePosition().addTo(map);

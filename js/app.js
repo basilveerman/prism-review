@@ -59,6 +59,11 @@ $(document).ready(function() {
         var geojson = l.toGeoJSON();
         if (geojson && geojson.properties && geojson.properties.name && geojson.properties.layer && geojson.properties.report) {
           l.bindPopup('<table class="table"><tr><th scope="row">Submitted By:</th><td>'+geojson.properties.name+'</td></tr><tr><th scope="row">Layer</th><td>'+geojson.properties.layer+'</td></tr><tr><th scope="row">Details</th><td>'+geojson.properties.report+'</td></tr></table>');
+          if (l.feature.geometry.type === 'Point') {
+            l.setIcon(map.reportIcon);
+          } else if (l.feature.geometry.type === 'Polygon'){
+            l.setStyle({color: 'red'})
+          }
         }
       }).addTo(map);
     });
