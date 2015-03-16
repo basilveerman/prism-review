@@ -8,7 +8,27 @@ L.Control.OverlayLegend = L.Control.extend({
     L.Util.setOptions(this, options);
   },
 
+  _getOverlayLayer: function(layer) {
+    // Utility fucntion to deal with grouped layers
+    if (typeof layer.getLayers !== "undefined") {
+      layers = layer.getLayers();
+      for (l in layers) {
+        if (this.options.selectableLayers.indexOf(layers[l]) > -1) {
+          return layers[l];
+        }
+      }
+      // Layer group does not contain any valid layers
+      return;
+    } else {
+      return layer;
+    }
+  },
+
   graphicURL: function(layer) {
+    layer = this._getOverlayLayer(layer);
+    if (typeof layer === "undefined") {
+      return '';
+    }
     server = layer._url;
     params = {
       PALETTE: layer.options.styles.split('/')[1],

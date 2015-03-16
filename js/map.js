@@ -86,7 +86,7 @@ var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   numcolorbands: 254,
   noWrap: true,
   popuphtml: function(value) {
-    return 'July Tmax: ' + Math.round(value * 10)/10 + ' &#x2103;C';
+    return 'July Tmax: ' + Math.round(value * 10)/10 + ' &#x2103;';
   }
 });
 
@@ -156,7 +156,7 @@ map.addControl(new L.Control.Draw({
 L.control.mousePosition().addTo(map);
 
 // Add overlay legend
-L.control.overlayLegend({layer: pr}).addTo(map);
+L.control.overlayLegend({layer: pr, selectableLayers: [pr, tmax, tmin]}).addTo(map);
 
 return map;
 }
