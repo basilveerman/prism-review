@@ -50,6 +50,7 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
+  tileSize: 512,
   time: '1995-06-30T00:00:00.000Z',
   colorscalerange: '280,7200',
   styles: 'boxfill/rainbow',
@@ -59,22 +60,25 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   popuphtml: function(value) {
     return 'Annual Precip: ' + Math.round(value) + ' mm';
   }
-}).addTo(map);
+});
+
 
 var pr_stations = L.markerClusterGroup();
 $.getJSON("data/ppt_stations.geojson", function(data) {
-    var geojson = L.geoJson(data, {
-      onEachFeature: popUp
-    })
-    pr_stations.addLayer(geojson);
-  });
-pr_stations.addTo(map);
+  var geojson = L.geoJson(data, {
+    onEachFeature: popUp
+  })
+  pr_stations.addLayer(geojson);
+});
+
+var precip_layers = L.layerGroup().addLayer(pr).addLayer(pr_stations).addTo(map);
 
 var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   layers: 'bc_tmax_8110/tmax',
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
+  tileSize: 512,
   time: '1995-07-15T00:00:00.000Z',
   colorscalerange: '0,30',
   styles: 'boxfill/ferret',
@@ -85,11 +89,23 @@ var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
     return 'July Tmax: ' + Math.round(value * 10)/10 + ' &#x2103;C';
   }
 });
+
+var tmax_stations = L.markerClusterGroup();
+$.getJSON("data/tx_stations.geojson", function(data) {
+  var geojson = L.geoJson(data, {
+    onEachFeature: popUp
+  })
+  tmax_stations.addLayer(geojson);
+});
+
+var tmax_layers = L.layerGroup().addLayer(tmax).addLayer(tmax_stations);
+
 var tmin = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   layers: 'bc_tmin_8110/tmin',
   transparent: true,
   opacity: 0.65,
   format: 'image/png',
+  tileSize: 512,
   time: '1995-01-15T00:00:00.000Z',
   colorscalerange: '-25,5',
   styles: 'boxfill/ferret',
@@ -101,15 +117,28 @@ var tmin = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   }
 });
 
+var tmin_stations = L.markerClusterGroup();
+$.getJSON("data/tn_stations.geojson", function(data) {
+  var geojson = L.geoJson(data, {
+    onEachFeature: popUp
+  })
+  tmin_stations.addLayer(geojson);
+});
+
+var tmin_layers = L.layerGroup().addLayer(tmin).addLayer(tmin_stations);
+
 // Add grouped layer control
 var groupedOverlays = {
   "PRISM Climatologies": {
-    "Max Temp": tmax,
-    "Min Temp": tmin,
-    "Precip": pr,
+    "Max Temp": tmax_layers,
+    "Min Temp": tmin_layers,
+    "Precip": precip_layers,
   }
 };
-var options = { exclusiveGroups: ["PRISM Climatologies"] };
+var options = {
+  exclusiveGroups: ["PRISM Climatologies"],
+  collapsed: false
+ };
 L.control.groupedLayers(null, groupedOverlays, options).addTo(map);
 
 // Leaflet-edit
