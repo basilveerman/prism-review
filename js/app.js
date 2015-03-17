@@ -118,7 +118,7 @@ $(document).ready(function() {
 
   var introDialog = BootstrapDialog.show({
     title: "Welcome",
-    message: "<p>Thank you for participiating in the PRISM review process. This application allows you to create data reports linked to a geographic areas of interest that will be reviewed by the PRISM team.</p><p> In order to save your data, this application requires you to log in with a Google account. We request access to your basic information (name and email) for reporting purposes. Once logged in your data will be automatically saved between sessions.</p>",
+    message: "<p>Thank you for participating in the PRISM review process. This application allows you to view and provide reviews of PRISM maps of the 1981 - 2010 climatologies of annual total precipitation, January minimum temperature, and July maximum temperature. You can create data reports linked to a geographic areas of interest or single points that will be reviewed by the PRISM team. Full documentation on the review process and portal functionality can be found <a href='doc.pdf'>here</a></p></p>In order to save your review input, this application requires you to log in with a Google account. We request limited access to your basic information (name and email) to allow us to follow up on your review comments where needed. Once logged in, your data will be automatically saved between sessions so you may revisit the portal at any time during the review period.</p>",
     type: BootstrapDialog.TYPE_INFO
   });
 });
