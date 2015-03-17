@@ -64,7 +64,7 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
 
 
 var pr_stations = L.markerClusterGroup();
-$.getJSON("data/ppt_stations.geojson", function(data) {
+$.getJSON("data/ppt_stations.json", function(data) {
   var geojson = L.geoJson(data, {
     onEachFeature: popUp
   })
@@ -91,7 +91,7 @@ var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
 });
 
 var tmax_stations = L.markerClusterGroup();
-$.getJSON("data/tx_stations.geojson", function(data) {
+$.getJSON("data/tx_stations.json", function(data) {
   var geojson = L.geoJson(data, {
     onEachFeature: popUp
   })
@@ -118,7 +118,7 @@ var tmin = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
 });
 
 var tmin_stations = L.markerClusterGroup();
-$.getJSON("data/tn_stations.geojson", function(data) {
+$.getJSON("data/tn_stations.json", function(data) {
   var geojson = L.geoJson(data, {
     onEachFeature: popUp
   })
