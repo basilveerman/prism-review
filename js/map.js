@@ -127,12 +127,16 @@ $.getJSON("data/tn_stations.geojson", function(data) {
 
 var tmin_layers = L.layerGroup().addLayer(tmin).addLayer(tmin_stations);
 
+// This layer intentionally blank
+var blank = L.marker();
+
 // Add grouped layer control
 var groupedOverlays = {
   "PRISM Climatologies": {
+    "Precip": precip_layers,
     "Max Temp": tmax_layers,
     "Min Temp": tmin_layers,
-    "Precip": precip_layers,
+    "None":  blank,
   }
 };
 var options = {
@@ -152,7 +156,6 @@ var reportIcon = new L.AwesomeMarkers.icon(
 });
 map.reportIcon = reportIcon;
 
-// map.addControl(new L.Control.Draw({
 var drawControl = new L.Control.Draw({
   draw: {
     polygon: {
