@@ -62,12 +62,9 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   }
 });
 
-
 var pr_stations = L.markerClusterGroup();
 $.getJSON("data/ppt_stations.json", function(data) {
-  var geojson = L.geoJson(data, {
-    onEachFeature: popUp
-  })
+  var geojson = L.geoJson(data);
   pr_stations.addLayer(geojson);
 });
 
@@ -92,9 +89,7 @@ var tmax = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
 
 var tmax_stations = L.markerClusterGroup();
 $.getJSON("data/tx_stations.json", function(data) {
-  var geojson = L.geoJson(data, {
-    onEachFeature: popUp
-  })
+  var geojson = L.geoJson(data);
   tmax_stations.addLayer(geojson);
 });
 
@@ -119,9 +114,7 @@ var tmin = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
 
 var tmin_stations = L.markerClusterGroup();
 $.getJSON("data/tn_stations.json", function(data) {
-  var geojson = L.geoJson(data, {
-    onEachFeature: popUp
-  })
+  var geojson = L.geoJson(data);
   tmin_stations.addLayer(geojson);
 });
 
@@ -178,6 +171,22 @@ L.control.mousePosition().addTo(map);
 
 // Add overlay legend
 L.control.overlayLegend({layer: pr, selectableLayers: [pr, tmax, tmin]}).addTo(map);
+
+// Add infobox
+var infoBox = L.control.infobox(pr_stations, {
+  title: "Station Info",
+}).addTo(map);
+
+// Update infobox to new station layer on overlay change
+map.on('overlayadd', function(e) {
+  // Event is actually fired on a change of LayerGroup, need to find station layer
+  var layers = e.layer.getLayers();
+  for (i in layers) {
+    if (layers[i] instanceof L.MarkerClusterGroup) {
+      infoBox.setQueryLayer(layers[i]);
+    }
+  }
+});
 
 return map;
 }

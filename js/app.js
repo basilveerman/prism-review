@@ -1,7 +1,6 @@
 $(document).ready(function() {
   var map = getMap();
 
-  var template = Handlebars.getTemplate('datareport');
   var layer;
   var user;
 
@@ -15,6 +14,7 @@ $(document).ready(function() {
       });
       return;
     }
+    var template = Handlebars.getTemplate('datareport');
     var type = event.layerType;
     layer = event.layer;
     var wkt = toWKT(layer);
