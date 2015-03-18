@@ -29,6 +29,9 @@ L.Control.OverlayLegend = L.Control.extend({
     if (typeof layer === "undefined") {
       return '';
     }
+    if (typeof layer._url === "undefined") { // Dirty hack to deal with 'none' layer
+      return '';
+    }
     server = layer._url;
     params = {
       PALETTE: layer.options.styles.split('/')[1],
