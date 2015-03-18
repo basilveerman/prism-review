@@ -180,11 +180,16 @@ var infoBox = L.control.infobox(pr_stations, {
 // Update infobox to new station layer on overlay change
 map.on('overlayadd', function(e) {
   // Event is actually fired on a change of LayerGroup, need to find station layer
-  var layers = e.layer.getLayers();
-  for (i in layers) {
-    if (layers[i] instanceof L.MarkerClusterGroup) {
-      infoBox.setQueryLayer(layers[i]);
-    }
+  if (typeof e.layer.getLayers !== "undefined") {
+    var layers = e.layer.getLayers();
+    for (i in layers) {
+      if (layers[i] instanceof L.MarkerClusterGroup) {
+        infoBox.setQueryLayer(layers[i]);
+      }
+    } 
+  } else {
+    // This is the empty layer
+    infoBox.remove()
   }
 });
 
