@@ -53,7 +53,7 @@ var pr = L.tileLayer.queryWMS('http://atlas.pcic.uvic.ca/ncWMS-pizza/wms', {
   tileSize: 512,
   time: '1995-06-30T00:00:00.000Z',
   colorscalerange: '280,7200',
-  styles: 'boxfill/rainbow',
+  styles: 'boxfill/occam_inv',
   logscale: true,
   numcolorbands: 254,
   noWrap: true,
