@@ -121,7 +121,7 @@ $.getJSON("data/tn_stations.json", function(data) {
 var tmin_layers = L.layerGroup().addLayer(tmin).addLayer(tmin_stations);
 
 // This layer intentionally blank
-var blank = L.marker();
+var blank = L.marker([51.5, -0.09]);
 
 // Add grouped layer control
 var groupedOverlays = {
