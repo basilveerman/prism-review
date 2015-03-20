@@ -15,9 +15,11 @@ function popUp(f,l){
 var crs = new L.Proj.CRS.TMS(
   'EPSG:3005',
   '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
-  [-1000000, -1000000, 3000000, 3000000],
+  // [-1000000, -1000000, 3000000, 3000000],
+  [-236114.0,41654.75,3171502.0,2313398.75],
   { 
-    resolutions: [7812.5, 3906.25, 1953.125, 976.5625, 488.28125, 244.140625, 122.0703125, 61.03515625, 30.517578125, 15.2587890625, 7.62939453125, 3.814697265625]
+    // resolutions: [7812.5, 3906.25, 1953.125, 976.5625, 488.28125, 244.140625, 122.0703125, 61.03515625, 30.517578125, 15.2587890625, 7.62939453125, 3.814697265625]
+    resolutions: [8874.0, 4437.0, 2218.5, 1109.25, 554.625, 277.3125, 138.6562, 69.32812, 34.66406, 17.33203, 8.666016, 4.333008]
   }
 );
 
@@ -35,13 +37,21 @@ var map = new L.Map('map',
 var reportLayer = L.geoJson().addTo(map);
 map.reportLayer = reportLayer;
 
-var osm = L.tileLayer('http://{s}.tiles.pacificclimate.org/tilecache/tilecache.py/1.0.0/bc_osm/{z}/{x}/{y}.png', 
+// var osm = L.tileLayer('http://{s}.tiles.pacificclimate.org/tilecache/tilecache.py/1.0.0/bc_osm/{z}/{x}/{y}.png', 
+//   {
+//     subdomains: 'abc',
+//     maxZoom: 12,
+//     noWrap: true,
+//     attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//     continuousWorld: false
+//   }
+//   ).addTo(map);
+
+var osm = L.tileLayer.wms('http://tools.pacificclimate.org/geoserver/gwc/service/wms',
   {
-    subdomains: 'abc',
-    maxZoom: 12,
-    noWrap: true,
+    layers: 'osm_pnwa_whites_gwc',
+    format: 'image/png',
     attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    continuousWorld: false
   }
   ).addTo(map);
 
